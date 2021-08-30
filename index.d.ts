@@ -1,11 +1,11 @@
 /**
  * The function will be called with (`key`, `value`) as arguments.
  * @param {Array | {}} object to traverse its members
- * @param {function} func The function
+ * @param {function} iteratee The function
  */
 export function forEachEntry(
 	object: any[] | Record<string, unknown>,
-	func: Function,
+	iteratee: () => any,
 ): void;
 
 /**
@@ -80,7 +80,7 @@ export function invert(
  */
 export function invertBy(
 	object: Record<string, unknown>,
-	iteratee: Function,
+	iteratee: () => any,
 ): Record<string, unknown>;
 
 /**
@@ -119,7 +119,7 @@ export function keysIn(object: Record<string, unknown>): any[];
  */
 export function mapKey(
 	object: Record<string, unknown>,
-	iteratee: Function,
+	iteratee: () => any,
 ): Record<string, unknown>;
 
 /**
@@ -139,7 +139,7 @@ export function mapKey(
  */
 export function mapObject(
 	object: Record<string, unknown>,
-	iteratee: Function,
+	iteratee: () => any,
 ): any[];
 
 /**
@@ -162,7 +162,7 @@ export function mapObject(
  */
 export function mapValue(
 	object: Record<string, unknown>,
-	iteratee: Function,
+	iteratee: () => any,
 ): Record<string, unknown>;
 
 /**

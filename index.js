@@ -2,22 +2,22 @@
 const {hasOwnProperty} = Object.prototype;
 const {toString} = Object.prototype;
 
-export const forEachEntry = (object, func) => {
-	if (!object || !func) return;
+export const forEachEntry = (object, iteratee) => {
+	if (!object || !iteratee) return;
 
 	if (Array.isArray(object)) {
 		for (const [index, v] of object.entries()) {
-			func(index, v);
+			iteratee(index, v);
 		}
 
 		return;
 	}
 
-	for (const p of Object.entries(object)) func(p[0], p[1]);
+	for (const p of Object.entries(object)) iteratee(p[0], p[1]);
 };
 
 export function functions(object) {
-	if (object == null) {
+	if (object === null) {
 		return [];
 	}
 
@@ -25,13 +25,13 @@ export function functions(object) {
 }
 
 export const has = (object, key) =>
-	object != null && hasOwnProperty.call(object, key);
+	object !== null && hasOwnProperty.call(object, key);
 
 export function invert(object) {
 	const result = {};
 	for (const key of Object.keys(object)) {
 		let value = object[key];
-		if (value != null && typeof value.toString !== 'function') {
+		if (value !== null && typeof value.toString !== 'function') {
 			value = toString.call(value);
 		}
 
@@ -58,14 +58,16 @@ export function invertBy(object, iteratee) {
 export function keysIn(object) {
 	const result = [];
 	for (const key in object) {
-		result.push(key);
+		if (Object.prototype.hasOwnProperty.call(object, key)) {
+			result.push(key);
+		}
 	}
 
 	return result;
 }
 
 export function mapKey(object, iteratee) {
-	object = new Object(object);
+	object = {object};
 	const result = {};
 
 	for (const key of Object.keys(object)) {
@@ -76,9 +78,10 @@ export function mapKey(object, iteratee) {
 	return result;
 }
 
-export function mapObj(object, iteratee) {
+export function mapObject(object, iteratee) {
 	const props = Object.keys(object);
-	const result = new Array(props.length);
+	const {length} = props;
+	const result = Array.from({length});
 
 	for (const [index, key] of props.entries()) {
 		result[index] = iteratee(object[key], key, object);
@@ -88,7 +91,7 @@ export function mapObj(object, iteratee) {
 }
 
 export function mapValue(object, iteratee) {
-	object = new Object(object);
+	object = {object};
 	const result = {};
 
 	for (const key of Object.keys(object)) {
@@ -99,10 +102,12 @@ export function mapValue(object, iteratee) {
 }
 
 export function toPlainObject(value) {
-	value = new Object(value);
+	value = {value};
 	const result = {};
 	for (const key in value) {
-		result[key] = value[key];
+		if (Object.prototype.hasOwnProperty.call(value, key)) {
+			result[key] = value[key];
+		}
 	}
 
 	return result;
