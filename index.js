@@ -58,7 +58,7 @@ export function invertBy(object, iteratee) {
 export function keysIn(object) {
 	const result = [];
 	for (const key in object) {
-		if (Object.prototype.hasOwnProperty.call(object, key)) {
+		if (hasOwnProperty.call(object, key)) {
 			result.push(key);
 		}
 	}
@@ -105,7 +105,7 @@ export function toPlainObject(value) {
 	value = {value};
 	const result = {};
 	for (const key in value) {
-		if (Object.prototype.hasOwnProperty.call(value, key)) {
+		if (hasOwnProperty.call(value, key)) {
 			result[key] = value[key];
 		}
 	}

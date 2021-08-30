@@ -2,7 +2,13 @@ import test from 'ava';
 import * as helpObject from './index.js';
 
 test('forEachEntry()', (t) => {
-	t.pass();
+	const object = {a: 1, b: 2, c: 3};
+	const iteratee = (index, value) => {
+		object[index] = value + 1;
+	};
+
+	helpObject.forEachEntry(object, iteratee);
+	t.deepEqual(object, {a: 2, b: 3, c: 4});
 });
 
 test('functions()', (t) => {
@@ -15,15 +21,21 @@ test('has()', (t) => {
 });
 
 test('invert()', (t) => {
-	t.pass();
+	const object = {a: 1, b: 2, c: 3};
+	const result = helpObject.invert(object);
+	t.deepEqual(result, {1: 'a', 2: 'b', 3: 'c'});
 });
 
 test('invertBy()', (t) => {
-	t.pass();
+	const object = {a: 1, b: 1, c: 2};
+	const result = helpObject.invertBy(object, (value) => value + 1);
+	t.deepEqual(result, {2: ['a', 'b'], 3: ['c']});
 });
 
 test('keysIn()', (t) => {
-	t.pass();
+	const object = {a: 1, b: 2, c: 3};
+	const result = helpObject.keysIn(object);
+	t.deepEqual(result, ['a', 'b', 'c']);
 });
 
 test('mapKey()', (t) => {
@@ -31,7 +43,10 @@ test('mapKey()', (t) => {
 });
 
 test('mapObject()', (t) => {
-	t.pass();
+	const object = {a: 1, b: 2, c: 3};
+	const square = (n) => n * n;
+	const result = helpObject.mapObject(object, square);
+	t.deepEqual(result, [1, 4, 9]);
 });
 
 test('mapValue()', (t) => {
