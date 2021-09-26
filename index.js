@@ -21,7 +21,7 @@ export function functions(object) {
 		return [];
 	}
 
-	return Object.keys(object).filter((key) => typeof object[key] === 'function');
+	return Object.keys(object).filter(key => typeof object[key] === 'function');
 }
 
 export const has = (object, key) =>
